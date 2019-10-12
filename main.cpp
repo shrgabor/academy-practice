@@ -1,5 +1,16 @@
 #include <iostream>
 
+struct Point {
+	int x;
+	int y;
+	int velocity;
+
+	void setCoords(int dx, int dy) {
+		x = dx;
+		y = dy;
+	}
+};
+
 void enumExample() {
 	enum Color {
 		red, green = 5, blue
@@ -41,4 +52,9 @@ int main() {
 
 	// ENUMS
 	enumExample();
+
+	// STRUCTS
+	Point point;
+	point.setCoords(10, 4);
+	std::cout << "coords x " << point.x << " coords y " << point.y << std::endl;
 }
