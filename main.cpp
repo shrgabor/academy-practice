@@ -1,6 +1,7 @@
 #include <iostream>
 
-struct Point {
+class Point {
+public:
 	int x;
 	int y;
 	int velocity;
@@ -53,7 +54,7 @@ int main() {
 	// ENUMS
 	enumExample();
 
-	// STRUCTS
+	// STRUCTS / CLASSES
 	Point point;
 	point.setCoords(10, 4);
 	std::cout << "coords x " << point.x << " coords y " << point.y << std::endl;
