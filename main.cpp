@@ -1,5 +1,22 @@
 #include <iostream>
 
+void enumExample() {
+	enum Color {
+		red, green = 5, blue
+	};
+	Color c = green;
+	switch (c) {
+		case green: std::cout << c; break;
+		case red  : std::cout << "red"; break;
+		case blue : std::cout << "blue"; break;
+	}
+
+	if (c < blue) {
+		std::cout << std::endl << "c is less than " << blue << std::endl;
+	}
+//	int value = green;  // implicit conversion
+}
+
 void increment(int var) {
 	var++; // fixme
 }
@@ -21,4 +38,7 @@ int main() {
 	increment(var);
 	std::cout << "value is > " << var << " size is > " << sizeof(var) << std::endl;
 	std::cout << "value is > " << ref << " size is > " << sizeof(ref) << std::endl;
+
+	// ENUMS
+	enumExample();
 }
