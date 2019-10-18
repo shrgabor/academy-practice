@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-cd build
+
+cd build || exit
 ./src/starter
-cd - > /dev/null
+cd - > /dev/null || exit

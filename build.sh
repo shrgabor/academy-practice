@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
+
 mkdir build
-cd build
+cd build || exit
 cmake ..
 make
-
