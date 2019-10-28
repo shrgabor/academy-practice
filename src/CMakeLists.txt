@@ -4,4 +4,4 @@ file(GLOB source_files "*.cpp")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(starter ${source_files})
+add_executable(starter ${source_files})
