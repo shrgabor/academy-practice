@@ -57,7 +57,9 @@ int main()
 
 	Server server;
 
-	server.Get("/", [](const Request &req, Response &res) {});
+	server.Get(R"(/)", [](const Request &req, Response &res) {
+		// You can add yours here
+	});
 	server.Get(R"(/users)", UsersController::getAll);
 	server.Get(R"(/users/(\d+))", UsersController::getById);
 	server.Post(R"(/users)", UsersController::set);

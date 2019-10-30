@@ -4,47 +4,93 @@
 
 using namespace nlohmann;
 
-#define LOG(str) std::cout << str << std::endl
-
 std::vector<std::string> UsersController::users;
 
 void UsersController::getAll(const Request &request, Response &response)
 {
-	// TODO iterate users and dump json
-	response.set_content("All the users!", "text/plain");
+	/**
+	 * [
+	 *   {name: "Izé Hozé"},
+	 *   {name: "Izé Hozé"}
+	 * ]
+	 */
+	json resBody = json::array({});
+
+	for (const std::string& name : users) {
+		resBody.push_back({{"name", name}});
+	}
+
+	response.set_content(resBody.dump(), "application/json");
 }
+
 void UsersController::getById(const Request &request, Response &response)
 {
-	auto id = request.matches[1].str();
-	// TODO find in users and return as json
-	response.set_content(id, "text/plain");
+	auto reqId = request.matches[1].str();
+
+	unsigned long id = 0;
+	std::string name;
+
+	try {
+		id = std::stoul(reqId); // NOTE: this could throw an exception
+		name = users.at(id); // NOTE: this could throw an exception
+
+		/**
+		 * {name: "Izé Hozé"}
+		 */
+		json resBody = {
+			{"name", name},
+		};
+
+		response.set_content(resBody.dump(), "application/json");
+	} catch (...) {
+		if (users.size() <= id) {
+			response.status = 404;
+		} else {
+			response.status = 400;
+		}
+	}
 }
 
 void UsersController::set(const Request &request, Response &response)
 {
 	try {
-		LOG(request.body);
-		json reqBody = json::parse(request.body);
+		std::cout << request.body << std::endl;
 
-		users.emplace_back(reqBody.at("name"));
+		json reqBody = json::parse(request.body); // NOTE: this could throw an exception
 
+		users.emplace_back(reqBody.at("name")); // NOTE: this could throw an exception
+
+		/**
+		 * {id: 1}
+		 */
 		json resBody = {
-			{"id", users.size()},
+			{"id", users.size()-1},
 		};
 
 		response.set_content(resBody.dump(), "application/json");
 	} catch (...) {
-		// TODO respond with error code
-//		response.set_content(, "application/json");
+		response.status = 400;
 	}
 }
 
 void UsersController::deleteById(const Request &request, Response &response)
 {
+	// TODO respond with the modified user's id
+	/**
+	 * 200 OK
+	 * {id: 1}
+	 */
 
+	// TODO if the requested id is not in the users vector respond with 404 Not Found
 }
 
 void UsersController::modifyById(const Request &request, Response &response)
 {
+	// TODO respond with the modified user's data
+	/**
+	 * 200 OK
+	 * {name: "Izé Hozé"}
+	 */
 
+	// TODO if the requested id is not in the users vector respond with 404 Not Found
 }
