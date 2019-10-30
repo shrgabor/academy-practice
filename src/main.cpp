@@ -63,8 +63,6 @@ int main()
 	server.Get(R"(/users)", UsersController::getAll);
 	server.Get(R"(/users/(\d+))", UsersController::getById);
 	server.Post(R"(/users)", UsersController::set);
-	server.Delete(R"(/users/(\d+))", UsersController::deleteById);
-	server.Put(R"(/users/(\d+))", UsersController::modifyById);
 
 	server.set_logger([](const Request &req, const Response &res) {
 		printf("%s", log(req, res).c_str());

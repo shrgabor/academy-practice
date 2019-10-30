@@ -76,27 +76,3 @@ void UsersController::set(const Request &request, Response &response)
 		response.status = 400;
 	}
 }
-
-void UsersController::deleteById(const Request &request, Response &response)
-{
-	std::lock_guard<std::mutex> lock(reqMutex);
-	// TODO respond with the modified user's id
-	/**
-	 * 200 OK
-	 * {id: 1}
-	 */
-
-	// TODO if the requested id is not in the users vector respond with 404 Not Found
-}
-
-void UsersController::modifyById(const Request &request, Response &response)
-{
-	std::lock_guard<std::mutex> lock(reqMutex);
-	// TODO respond with the modified user's data
-	/**
-	 * 200 OK
-	 * {name: "Izé Hozé"}
-	 */
-
-	// TODO if the requested id is not in the users vector respond with 404 Not Found
-}
