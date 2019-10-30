@@ -17,4 +17,5 @@ public:
 
 private:
 	static std::vector<std::string> users;
+	static std::mutex reqMutex;
 };

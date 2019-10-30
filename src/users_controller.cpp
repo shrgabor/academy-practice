@@ -5,9 +5,11 @@
 using namespace nlohmann;
 
 std::vector<std::string> UsersController::users;
+std::mutex UsersController::reqMutex;
 
 void UsersController::getAll(const Request &request, Response &response)
 {
+	std::lock_guard<std::mutex> lock(reqMutex);
 	/**
 	 * [
 	 *   {name: "Izé Hozé"},
@@ -25,6 +27,7 @@ void UsersController::getAll(const Request &request, Response &response)
 
 void UsersController::getById(const Request &request, Response &response)
 {
+	std::lock_guard<std::mutex> lock(reqMutex);
 	auto reqId = request.matches[1].str();
 
 	unsigned long id = 0;
@@ -53,6 +56,7 @@ void UsersController::getById(const Request &request, Response &response)
 
 void UsersController::set(const Request &request, Response &response)
 {
+	std::lock_guard<std::mutex> lock(reqMutex);
 	try {
 		std::cout << request.body << std::endl;
 
@@ -75,6 +79,7 @@ void UsersController::set(const Request &request, Response &response)
 
 void UsersController::deleteById(const Request &request, Response &response)
 {
+	std::lock_guard<std::mutex> lock(reqMutex);
 	// TODO respond with the modified user's id
 	/**
 	 * 200 OK
@@ -86,6 +91,7 @@ void UsersController::deleteById(const Request &request, Response &response)
 
 void UsersController::modifyById(const Request &request, Response &response)
 {
+	std::lock_guard<std::mutex> lock(reqMutex);
 	// TODO respond with the modified user's data
 	/**
 	 * 200 OK
