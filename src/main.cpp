@@ -1,4 +1,5 @@
 #include <httplib.h>
+#include <iostream>
 #include "users_controller.h"
 
 std::string dump_headers(const Headers &headers) {
@@ -68,5 +69,6 @@ int main()
 		printf("%s", log(req, res).c_str());
 	});
 
+	std::cout << "Listening on http://localhost:3000" << std::endl;
 	server.listen("localhost", 3000);
 }
