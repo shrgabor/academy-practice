@@ -4,8 +4,9 @@
 
 using namespace nlohmann;
 
-std::vector<std::string> UsersController::users;
+std::map<unsigned long, std::string> UsersController::users;
 std::mutex UsersController::reqMutex;
+unsigned long UsersController::nextId = 0;
 
 void UsersController::getAll(const Request &request, Response &response)
 {
@@ -18,8 +19,11 @@ void UsersController::getAll(const Request &request, Response &response)
 	 */
 	json resBody = json::array({});
 
-	for (const std::string& name : users) {
-		resBody.push_back({{"name", name}});
+	for (const auto & user : users) {
+		resBody.push_back({
+		  {"id", user.first},
+		  {"name", user.second},
+		});
 	}
 
 	response.set_content(resBody.dump(), "application/json");
@@ -41,6 +45,7 @@ void UsersController::getById(const Request &request, Response &response)
 		 * {name: "Izé Hozé"}
 		 */
 		json resBody = {
+			{"id", id},
 			{"name", name},
 		};
 
@@ -62,15 +67,16 @@ void UsersController::set(const Request &request, Response &response)
 
 		json reqBody = json::parse(request.body); // NOTE: this could throw an exception
 
-		users.emplace_back(reqBody.at("name")); // NOTE: this could throw an exception
+		users.emplace(UsersController::nextId, reqBody.at("name")); // NOTE: this could throw an exception
 
 		/**
 		 * {id: 1}
 		 */
 		json resBody = {
-			{"id", users.size()-1},
+			{"id", UsersController::nextId},
 		};
 
+		++UsersController::nextId;
 		response.set_content(resBody.dump(), "application/json");
 	} catch (...) {
 		response.status = 400;

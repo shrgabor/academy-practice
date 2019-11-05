@@ -14,6 +14,7 @@ public:
 	static void set(const Request &request, Response &response);
 
 private:
-	static std::vector<std::string> users;
+	static std::map<unsigned long, std::string> users;
 	static std::mutex reqMutex;
+	static unsigned long nextId;
 };
